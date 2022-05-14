@@ -1,0 +1,19 @@
+body {
+    background-color: lemonchiffon;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.topText {
+    display:inline;
+    font-size: 18px;
+}
+
+.topText button {
+    background-color: forestgreen;
+}
+
+
+button {
+    background-color:cornflowerblue;
+    font-size: 18px;
+}
