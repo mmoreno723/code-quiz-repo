@@ -12,8 +12,30 @@ body {
     background-color: forestgreen;
 }
 
-
 button {
-    background-color:cornflowerblue;
+    background-color: lightgreen;
     font-size: 18px;
+}
+
+#quizBox {
+    box-sizing: border-box;
+    border: 1px solid black;
+    width: 50%;
+    height: 150px;
+    position: relative;
+    left: 345px;
+    bottom: 55px;
+    background-color: cornflowerblue;
+}
+
+#stopQuiz {
+    position:relative;
+    right: 200px;
+    top: 10px;
+}
+
+#nextQuestion {
+    position: relative;
+    left: 200px;
+    top: 10px;
 }
