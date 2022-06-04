@@ -1,152 +1,202 @@
 // Dependencies
-var time = 90;
+var startBtn = document.querySelector("#startButton");
+var scoreBtn = document.querySelector("#highscores");
+var containerOne = document.querySelector("#containerOne");
+var containerTwo = document.querySelector("#containerTwo");
+var timer = document.querySelector("#timer");
 
-var timerEl = document.getElementById('timer');
-var nextButton = document.getElementById('nextQuestion');
+var timeLeft;
+var timeInterval;
+var currentScore;
+var currentQuestion;
+var questions = [
+  {
+    question: "Which of the following is NOT a variable in Javascript?",
+    selections: ["String", "Boolean", "Number", "Selector"],
+    answer: 3,
+  },
+  {
+    question:
+      "What do you input if you are trying to test for strict equality?",
+    selections: ["===", "==", "isEqual", "/="],
+    answer: 0,
+  },
+  {
+    question:
+      "Which of the following can you use to display a message to the users screen?",
+    selections: ["showMessage", "alert()", "display()", "popup()"],
+    answer: 1,
+  },
+  {
+    question:
+      "Where is the correct place to insert a JavaScript file within the HTML document?",
+    selections: [
+      "<header> section",
+      "<main> section",
+      "<body> section",
+      "<footer> section",
+    ],
+    answer: 2,
+  },
+];
 
-
-// Quiz Box
-
-var quizQuestion = document.getElementById('questionsList');
-
-
-// Highscores box
-var body = document.body;
-var h1El = document.createElement("h1");
-var scoresInfoEl = document.createElement("div");
-var listEl = document.createElement("ol");
-var li1 = document.createElement("li1");
-var li2 = document.createElement("li2");
-var li3 = document.createElement("li3");
-var scoresGoBack = document.createElement("button");
-var clearScores = document.createElement("button");
-
-
-// Starting Data
-var startEl = document.getElementById('startButton');
-var buttonOne = document.getElementById("button-1");
-var startingTextBox = document.querySelector(".startingText")
-var quizBox = document.querySelector("#quizBox");
-var questions = {
-    listofQuestions: ["What are the items in an angled bracket (<>) known as in HTML?", 
-    "How do we access the styling in JavaScript?", 
-    "What is one way you can select an HTML element using JavaScript?",
-    "What do you use to listen for a click?",]
-}    
-    
-    // "answer" : 1
-
-
-
-var selections = {
-    listofAnswers: ["Tags", "Queries", "Scripts", "ID's"] 
-}    
-
-
-startingTextBox.setAttribute("style", "display:block");
-quizBox.setAttribute("style", "display: none");
-// Functions
-    // start game
-function startQuiz() {
-    startingTextBox.setAttribute("style", "display:none");
-    countdown();
-    quizBox.setAttribute("style", "display:block;");
-    renderCurrentQuestion();
-    // determine if user click matches the correct answer
-    // correct answer
-    // what is our current question?
-    // function render each question
-    // current question index?
-    // wrong answer
-    // move on to next question
-    // each wrong answer deducts time by 5 seconds
+function startGame() {
+  questionCount = 0;
+  currentScore = 0;
+  setTimer();
+  showQuestion();
 }
 
+function setTimer() {
+  var timeLeft = 90;
+  timer.textContent = "Time: " + timeLeft;
+  console.log(timeLeft);
+  var timeInterval = setInterval(function () {
+    timeLeft--;
 
-function renderCurrentQuestion() {
-    var currentQuestion = questions.listofQuestions[0];
-    document.getElementById("questionsList").innerHTML = currentQuestion;
-    nextButton.addEventListener("click", function() {
-        renderNextQuestion();
-    })
-    
-    
-    //chosenQuestion = questions[Math.floor(Math.random() * questions.length)];
-    //quizQuestion.textContent = chosenQuestion;
+    timer.textContent = "Time: " + timeLeft;
 
-}
+    if (timeLeft === 0) {
+      clearInterval(timeInterval);
 
-function renderNextQuestion () {
-    var userSelection = nextButton.addEventListener("click", function() {})
-    if (userSelection === true) {
-        currentQuestion++;
+      window.alert("Times up, game over :(");
+      showResult();
     }
-    console.log (currentQuestion);
+  }, 1000);
 }
 
-function renderAnswer() {
-    var currentAnswers = selections.length;
-    document.getElementById("buttons-1").innerHTML = currentAnswers
-    console.log(currentAnswers);
-}
+function showQuestion() {
+  containerOne.textContent = "";
+  containerTwo.textContent = "";
 
-function countdown() {
-    var timeLeft = 91;
+  var currentQuestion = questions[questionCount];
 
-    var timeInterval = setInterval(function() {
-        
-        timeLeft--;
-        timerEl.textContent = timeLeft + " seconds remaining"
+  var question = document.createElement("h2");
+  question.textContent = currentQuestion.question;
+  containerOne.appendChild(question);
 
-        if (timeLeft === 0) {
-            clearInterval(timeInterval);
-            //window.alert("Outta Time!")
+  var selections = document.createElement("ul");
 
-        }
-    }, 1000);
-}
-        
-// User Interactions
-startEl.addEventListener("click", function() {
-    startQuiz();
-})
+  currentSelection = currentQuestion.selections;
 
-nextButton.addEventListener("click", function() {
-    renderNextQuestion();
-})
-    // user selection when answer choice is clicked
-// Initialization
-// questions 
+  var select;
+  for (let i = 0; i < currentSelection.length; i++) {
+    select = document.createElement("button");
+    select.textContent = i + 1 + ". " + currentSelection[i];
+    select.setAttribute("id", i);
+    select.setAttribute("class", "selection");
 
-
-
-
-
-h1El.textContent = "Highscores";
-body.appendChild(h1El);
-body.appendChild(scoresInfoEl);
-scoresInfoEl.appendChild(listEl);
-
-h1El.setAttribute("style", "margin:auto; width:50%; text-align:center; padding: 40px;");
-scoresInfoEl.setAttribute("style", "margin:auto; width:30%; text-align:left; font-size:18px;");
-//scoresGoBack.setAttribute("style", "text-align:center; background-color: black;");
-//clearScores.setAttribute("style", "text-align:center; background-color: cornflowerblue;");
-
-var highScores = ["", "", "", ""];
-
-for (var i = 0; i < highScores.length; i++) {
-    var highScore = highScores[i];
+    select.addEventListener("click", function (event) {
+      if (i === currentQuestion.answer) {
+        window.alert("Correct! :)");
+        currentScore++;
+      } else {
+        window.alert("Incorrect! :(");
+        timeLeft -= 5;
+      }
+      nextQuestion();
+    });
     var li = document.createElement("li");
-    li.textContent = highScore;
-    li.setAttribute("style", "background: #6495ED; padding 5px;");
-    listEl.appendChild(li);
+    li.appendChild(select);
+    selections.appendChild(li);
+  }
+  containerTwo.appendChild(selections);
 }
 
+function nextQuestion() {
+  if (questionCount === questions.length - 1) {
+    clearInterval(timeInterval);
+    timer.textContent = "0";
+    showResult();
+  } else {
+    questionCount++;
+    showQuestion();
+  }
+}
 
+function showResult() {
+  containerOne.textContent = "";
+  containerTwo.textContent = "";
 
+  var title = document.createElement("h2");
+  title.textContent = "Results";
+  containerOne.appendChild(title);
 
+  var showScore = document.createElement("p");
+  showScore.textContent = "Your final score is " + currentScore;
+  containerOne.appendChild(showScore);
 
+  var label = document.createElement("label");
+  label.textContent = "Enter initials: ";
+  containerTwo.appendChild(label);
 
-// add startQuiz(); to make sure countdown starts
+  var form = document.createElement("input");
+  form.setAttribute("type", "text");
+  form.setAttribute("id", "inital");
+  containerTwo.appendChild(form);
 
+  var submit = document.createElement("button");
+  submit.setAttribute("id", "submit");
+  submit.textContent = "Submit";
+  containerTwo.appendChild(submit);
 
+  submit.addEventListener("click", function (event) {
+    localStorage.setItem(form.value, currentScore);
+    scoreboard();
+  });
+}
+
+function scoreboard() {
+  clearInterval(timeInterval);
+  timer.textContent = "0";
+
+  var title = document.createElement("h2");
+  title.textContent = "Scoreboard";
+
+  containerOne.textContent = "";
+  containerOne.appendChild(title);
+
+  var board = getScoreBoard();
+  board.setAttribute("id", "board");
+  containerOne.appendChild(board);
+
+  containerTwo.textContent = "";
+  var goHome = document.createElement("button");
+  goHome.textContent = "Go Home";
+  containerTwo.appendChild(goHome);
+
+  var clearBoard = document.createElement("button");
+  clearBoard.textContent = "Clear Scoreboard";
+  containerTwo.appendChild(clearBoard);
+
+  goHome.addEventListener("click", function (event) {
+    window.location.reload();
+  });
+}
+
+function getScoreBoard() {
+  var board = document.createElement("ul");
+  var element = document.createElement("li");
+  var name;
+  var score;
+
+  for (let i = 0; i < localStorage.length; i++) {
+    name = localStorage.key(i);
+    score = localStorage.getItem(name);
+    element.textContent = name + " - " + score;
+
+    board.appendChild(element.cloneNode(true));
+  }
+
+  return board;
+}
+
+scoreBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  scoreboard();
+});
+
+startBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  startGame();
+});

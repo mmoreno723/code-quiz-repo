@@ -1,46 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content ="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JavaScript Quiz</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
-    <div class ="topText">
-        <p id="countdown">Time: <span id ="timer"></span></p>
-        <button id="highscore">View Highscores</button>
-    </div>
-
-    <br>
-    <div class="container" style="text-align:center">
-        <div class = "startingText">
-            <h1>Coding Quiz Challenge</h1>
-            <br>
-            <p>Answer the following code questions within the time limit. Any wrong answers will deduct your time by 5 seconds. Good luck!</p>
-            <br>
-            <button id="startButton">Start Quiz</button>
-        </div>
-        <div id ="quizBox">
-            <h3 id="questionsList"></h3>
-            <div class="buttons">
-                <button id="button-1">Choice 1</button>
-                <button id="button-2">Choice 2</button>
-                <button id="button-3">Choice 3</button>
-                <button id="button-4">Choice 4</button>
-            </div>
-        </div>    
-        </div>   
-            </div>
-                <div class="controls">
-             <button id="stopQuiz">Quit</button>
-                <button id="nextQuestion">Next</button>
-            </div>
-        </div>
-    </div>
+  <body>
+    <header>
+      <button id="highscores"><p>Highscores</p></button>
+      <p id="timer">Time:</p>
+    </header>
+    <br />
+    <main>
+      <section id="containerOne" style="text-align: center">
+        <h1>Coding Quiz Challenge</h1>
+        <br />
+        <p>
+          Answer the following code questions within the time limit. Any wrong
+          answers will deduct your time by 5 seconds. Good luck!
+        </p>
+      </section>
+      <section id="containerTwo" style="text-align: center">
+        <button id="startButton">Start Quiz</button>
+      </section>
+    </main>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
